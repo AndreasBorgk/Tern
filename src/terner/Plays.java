@@ -1,13 +1,15 @@
 package terner;
 
 public class Plays {
+    private String navn;
     private Ternings d1;
     private Ternings d2;
     private int accum = 0;
     private int gamesWon = 0;
 
-    Plays()
+    Plays(String navn)
     {
+        this.navn = navn;
         d1 = new Ternings();
         d2 = new Ternings();
     }
@@ -19,6 +21,11 @@ public class Plays {
 
         d2.roll();
         accum += d2.getFaceValue();
+    }
+
+    String getNavn()
+    {
+        return navn;
     }
 
     int getFaceValue1()
