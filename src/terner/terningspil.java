@@ -7,49 +7,78 @@ class Main {
     private static Plays p2;
 
 
-
-
-
-        private static void inputPlayerNames()
-        {
-            System.out.println("Player 1, type in your name: ");
-            Scanner sc = new Scanner(System.in);
-            String Spiller1 = sc.next();
-            System.out.println("Welcome " + Spiller1);
-            System.out.println("Player 2, type in your name: ");
-            p1 = new Plays(Spiller1);
-            String Spiller2 = sc.next();
-            System.out.println("Welcome " + Spiller2);
-            p2 = new Plays(Spiller2);
-            System.out.println("Type 'start' to start game");
-            String start = sc.next();
-            start = start.toLowerCase();
+    private static void inputPlayerNames() {
+        Scanner sc = new Scanner(System.in);
+        String input;
+        System.out.println("Player 1, type in your name: ");
+        String Spiller1 = sc.next();
+        System.out.println("Welcome " + Spiller1);
+        System.out.println("Player 2, type in your name: ");
+        p1 = new Plays(Spiller1);
+        String Spiller2 = sc.next();
+        System.out.println("Welcome " + Spiller2);
+        p2 = new Plays(Spiller2);
+        System.out.println("Are you ready to start the game? '(y/n)'");
         }
+
+
+
+
 
         private static void playGame()
         {
             int round = 1;
             Scanner sc = new Scanner(System.in);
             while ((p1.getAccum() < 40) && (p2.getAccum() < 40)) {
+                int LastThrow;
+                LastThrow = 0;
                 System.out.println(p1.getNavn() + " Press 'K' if you're ready to throw");
                 String k = sc.next();
                 k = k.toLowerCase();
                 p1.roll();
                 System.out.println(p1.getNavn() + " rolls: (" + p1.getFaceValue1() + "," + p1.getFaceValue2() + ") ->" + p1.getAccum());
+                p1.saveLastThrow();
+                p1.clearPointsIfOnes();
+                p1.newTurnIfSame();
+                p1.getSaveLastThrow();
                 System.out.println(p2.getNavn() + " Press 'K' if you're ready to throw");
                 String K = sc.next();
                 K = K.toLowerCase();
                 p2.roll();
                 System.out.println(p2.getNavn() + " rolls: (" + p2.getFaceValue1() + "," + p2.getFaceValue2() + ") ->" + p2.getAccum());
+                p2.saveLastThrow();
+                p2.clearPointsIfOnes();
+                p2.newTurnIfSame();
+                p2.getSaveLastThrow();
                 System.out.println();
                 System.out.println("Round: " + round);
                 round++;
                 System.out.println("Current score is: " +  p1.getNavn() + ": " + p1.getAccum()  + " and " +  p2.getNavn() + ": " + p2.getAccum());
-
                 System.out.println();
             }
 
-            if (p1.getAccum() > p2.getAccum()) {
+            while ( p1.getAccum() <= 40|| p2.getAccum() <= 40)
+            {
+                System.out.println(p1.getNavn() );
+                System.out.println(p1.getNavn() + " Press 'K' if you're ready to throw");
+                String T = sc.next();
+                T = T.toLowerCase();
+                p1.roll();
+                System.out.println(p1.getNavn() + " rolls: (" + p1.getFaceValue1() + "," + p1.getFaceValue2() + ")");
+                p1.playForTwoEquals();
+                System.out.println(p2.getNavn() + " Press 'K' if you're ready to throw");
+                String t = sc.next();
+                t = t.toLowerCase();
+                p2.roll();
+                System.out.println(p2.getNavn() + " rolls: (" + p1.getFaceValue1() + "," + p1.getFaceValue2() + ")");
+                p2.playForTwoEquals();
+            }
+
+
+
+
+
+            if (p1.getAccum() > p2.getAccum() || p1.getFaceValue1() == p1.getFaceValue2()) {
                 System.out.println(p1.getNavn() + " won with: " + p1.getAccum());
                 p1.incGamesWon();
 
