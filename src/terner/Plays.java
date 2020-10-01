@@ -8,12 +8,11 @@ public class Plays {
     private Ternings d2;
     private int accum = 0;
     private int gamesWon = 0;
-    private int LastThrow = 0;
+    private int lastThrow = 0;
 
     void saveLastThrow()
     {
-        LastThrow = getFaceValue1() + getFaceValue2();
-
+        lastThrow = getFaceValue1() + getFaceValue2();
     }
     Plays(String navn)
     {
@@ -52,6 +51,7 @@ public class Plays {
     void newGame()
     {
         accum = 0;
+        lastThrow = 0;
     }
 
     void incGamesWon()
@@ -74,35 +74,34 @@ public class Plays {
 
     }
 
-    void playForTwoEquals()
+    void checkIfDiceEqualAndReset()
     {
         if (getFaceValue1() == getFaceValue2()) {
             System.out.println("you rolled two equals, while being above 40 points.");
+            newGame();
 
         }
 
     }
 
-    void newTurnIfSame() {
-        Scanner sc = new Scanner(System.in);
-        if (getFaceValue1() == getFaceValue2()) {
-            System.out.println("you rolled a pair, new turn!");
-            System.out.println(getNavn() + " Press 'K' if you're ready to throw");
-            String K = sc.next();
-            K = K.toLowerCase();
-            roll();
-            System.out.println(getFaceValue1() + " + " + getFaceValue2() + " = " + getAccum());
-            saveLastThrow();
+    boolean extraTurn() {
+        return getFaceValue1() == getFaceValue2();
         }
+
+
+
+
+
+    boolean isCurrentAndLastThrowSixes() {
+            return lastThrow == 12 && (getFaceValue1() + getFaceValue2()) == 12;
+
+
     }
 
+    boolean isGameDone() {
+        boolean isFinalStage = (getAccum() - (getFaceValue1() +getFaceValue2())) >= 40;
+        return isFinalStage && getFaceValue1() == getFaceValue2();
 
-
-
-    void getSaveLastThrow() {
-        if (LastThrow == 12 && (getFaceValue1() + getFaceValue2()) == 12) {
-            System.out.println(getNavn() + " have rolled pair 6 two times in a row, you've won the game");
-        }
     }
 
 
