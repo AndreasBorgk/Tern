@@ -77,7 +77,8 @@ class Main {
             if (p1.isGameDone()) // Denne kode køres hvis spiller 1 er færdig
             {
                 // Spiller 1's navn, værdien på han sidste kast og han samlede score printes
-                System.out.println(p1.getNavn() + " won with: " + p1.getFaceValue1() + ", " + p1.getFaceValue2()  + " = " + p2.getAccum());
+                System.out.println(p1.getNavn() + " won with: "
+                        + p1.getFaceValue1() + ", " + p1.getFaceValue2()  + " = " + p1.getAccum());
 
                 p1.incGamesWon(); // Player1 gameswon +1
                 System.out.println("Games won : " + p1.getGamesWon());
@@ -87,7 +88,8 @@ class Main {
             if (p2.isGameDone()) // Denne kode køres hvis spiller 2 er færdig
             {
                 // Spiller 2's navn, værdien på han sidste kast og han samlede score printes
-                System.out.println(p2.getNavn() + " won with dice roll: " + p2.getFaceValue1() + ", " + p2.getFaceValue2() + " = " + p2.getAccum());
+                System.out.println(p2.getNavn() + " won with dice roll: "
+                        + p2.getFaceValue1() + ", " + p2.getFaceValue2() + " = " + p2.getAccum());
 
                 p2.incGamesWon(); // Player2 gameswon +1
                 System.out.println("Games won : " + p2.getGamesWon());
