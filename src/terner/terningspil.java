@@ -5,11 +5,10 @@ import java.util.Scanner;
 class Main {
     private static Plays p1;
     private static Plays p2;
-
+    private static Plays currentPlayer;
+    static Scanner sc = new Scanner(System.in);
 
     private static void inputPlayerNames() {
-        Scanner sc = new Scanner(System.in);
-        String input;
         System.out.println("Player 1, type in your name: ");
         String Spiller1 = sc.next();
         System.out.println("Welcome " + Spiller1);
@@ -19,82 +18,63 @@ class Main {
         System.out.println("Welcome " + Spiller2);
         p2 = new Plays(Spiller2);
         System.out.println("Are you ready to start the game? '(y/n)'");
+        sc.next();
         }
 
-
-
-
+        private static void doTurn()
+        {
+            do {
+                System.out.println(currentPlayer.getNavn() + " Press 'K' if you're ready to throw");
+                String k = sc.next();
+                k = k.toLowerCase();
+                currentPlayer.roll();
+                System.out.println(currentPlayer.getNavn() + " rolls: (" + currentPlayer.getFaceValue1() + "," + currentPlayer.getFaceValue2() + ") ->" + currentPlayer.getAccum());
+                currentPlayer.clearPointsIfOnes();
+            } while (currentPlayer.extraTurn() &&! currentPlayer.isGameDone());
+        }
 
         private static void playGame()
         {
             int round = 1;
-            Scanner sc = new Scanner(System.in);
             while ((!p1.isGameDone()) &&! (p2.isGameDone())){
-                do {
-                    System.out.println(p1.getNavn() + " Press 'K' if you're ready to throw");
-                    String k = sc.next();
-                    k = k.toLowerCase();
-                    p1.roll();
-                    System.out.println(p1.getNavn() + " rolls: (" + p1.getFaceValue1() + "," + p1.getFaceValue2() + ") ->" + p1.getAccum());
-                    p1.saveLastThrow();
-                    p1.clearPointsIfOnes();
-                } while (p1.extraTurn() &&! p1.isGameDone());
-
-                do {
-                    System.out.println(p2.getNavn() + " Press 'K' if you're ready to throw");
-                    String k = sc.next();
-                    k = k.toLowerCase();
-                    p2.roll();
-                    System.out.println(p2.getNavn() + " rolls: (" + p2.getFaceValue1() + "," + p2.getFaceValue2() + ") ->" + p2.getAccum());
-                    p2.saveLastThrow();
-                    p2.clearPointsIfOnes();
-                } while (p2.extraTurn() &&! p2.isGameDone());
                 System.out.println("Round: " + round);
                 round++;
+                currentPlayer = p1;
+                doTurn();
+                currentPlayer = p2;
+                doTurn();
                 System.out.println("Current score is: " +  p1.getNavn() + ": " + p1.getAccum()  + " and " +  p2.getNavn() + ": " + p2.getAccum());
                 System.out.println();
-
-
-
             }
 
-            if (p1.getFaceValue1() == p1.getFaceValue2()) {
-                System.out.println(p1.getNavn() + " won with: " + p1.getFaceValue1() + ", " + p1.getFaceValue2());
+            if (p1.isGameDone()) {
+                System.out.println(p1.getNavn() + " won with: " + p1.getFaceValue1() + ", " + p1.getFaceValue2()  + " = " + p2.getAccum());
                 p1.incGamesWon();
-                newGame();
+                System.out.println("Games won : " + p1.getGamesWon());
 
-
-            } if (p2.getFaceValue1() == p2.getFaceValue2()) {
-            System.out.println(p2.getNavn() + " won with dice roll: " + p2.getFaceValue1() + ", " + p2.getFaceValue2());
+            } if (p2.isGameDone()) {
+            System.out.println(p2.getNavn() + " won with dice roll: " + p2.getFaceValue1() + ", " + p2.getFaceValue2() + " = " + p2.getAccum());
             p2.incGamesWon();
-            newGame();
-
+            System.out.println("Games won : " + p2.getGamesWon());
             }
-
-
         }
 
     private static void newGame() {
         inputPlayerNames();
         String another = "y";
-        Scanner sc = new Scanner(System.in);
 
         while (another.equalsIgnoreCase("y"))
         {
             playGame();
             System.out.println();
-            System.out.print("vil du spille igen (y/n)");
+            System.out.print("would you like to play again? (y/n)");
             another = sc.next();
             p1.newGame();
             p2.newGame();
         }
-
     }
-
 
     public static void main(String[] args) {
             newGame();
-
-
     }
 }

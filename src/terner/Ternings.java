@@ -11,7 +11,7 @@ public class Ternings {
 
     public void roll()
     {
-        faceValue = (int)(Math.random() * MAX) + 1;
+        faceValue = (int)(Math.random()* MAX +1);
     }
 
     public int getFaceValue()

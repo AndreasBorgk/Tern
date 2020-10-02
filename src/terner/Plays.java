@@ -1,7 +1,5 @@
 package terner;
 
-import java.util.Scanner;
-
 public class Plays {
     private String navn;
     private Ternings d1;
@@ -14,6 +12,7 @@ public class Plays {
     {
         lastThrow = getFaceValue1() + getFaceValue2();
     }
+
     Plays(String navn)
     {
         this.navn = navn;
@@ -23,6 +22,8 @@ public class Plays {
 
     void roll()
     {
+        saveLastThrow();
+
         d1.roll();
         accum += d1.getFaceValue();
 
@@ -43,6 +44,7 @@ public class Plays {
     int getFaceValue2(){
         return d2.getFaceValue();
     }
+
     int getAccum()
     {
         return accum;
@@ -68,43 +70,21 @@ public class Plays {
         if (getFaceValue1() == 1 && getFaceValue2() == 1) {
             System.out.println("You rolled ones, your score has been reset");
             accum = 0;
-
-
         }
-
-    }
-
-    void checkIfDiceEqualAndReset()
-    {
-        if (getFaceValue1() == getFaceValue2()) {
-            System.out.println("you rolled two equals, while being above 40 points.");
-            newGame();
-
-        }
-
     }
 
     boolean extraTurn() {
         return getFaceValue1() == getFaceValue2();
         }
 
-
-
-
-
     boolean isCurrentAndLastThrowSixes() {
             return lastThrow == 12 && (getFaceValue1() + getFaceValue2()) == 12;
-
-
     }
 
     boolean isGameDone() {
         boolean isFinalStage = (getAccum() - (getFaceValue1() +getFaceValue2())) >= 40;
-        return isFinalStage && getFaceValue1() == getFaceValue2();
-
+        return (isFinalStage && getFaceValue1() == getFaceValue2()) || isCurrentAndLastThrowSixes();
     }
-
-
 
     void reset()
     {
