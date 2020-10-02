@@ -1,5 +1,7 @@
 package terner;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.Scanner;
 
 class Main {
@@ -8,7 +10,15 @@ class Main {
     private static Plays currentPlayer;
     static Scanner sc = new Scanner(System.in);
 
+
+
     private static void inputPlayerNames() {
+        System.out.println("rules for DiceGame: \n" +
+                "1. When you hit 40 points, you have to roll a pair to win the game\n" +
+                "2. If you roll a pair, you get an extra turn \n" +
+                "3. If you roll a pair of ones you lose your points \n" +
+                "4. if you roll double 6 twice in a row, you win the game");
+
         System.out.println("Player 1, type in your name: ");
         p1 = new Plays(sc.next()); // Spiller 1's navn vælges og gemmes i p1
         System.out.println("Welcome " + p1.getNavn());
@@ -59,7 +69,8 @@ class Main {
                 doTurn(); // kører do loop på player 2
 
                 // printer current score ud for player 1 og player 2
-                System.out.println("Current score is: " +  p1.getNavn() + ": " + p1.getAccum()  + " and " +  p2.getNavn() + ": " + p2.getAccum());
+                System.out.println("Current score is: " +  p1.getNavn() + ": " + p1.getAccum()
+                        + " and " +  p2.getNavn() + ": " + p2.getAccum());
                 System.out.println();
             }
 
