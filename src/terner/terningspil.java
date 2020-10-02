@@ -25,8 +25,7 @@ class Main {
         {
             do {
                 System.out.println(currentPlayer.getNavn() + " Press 'K' if you're ready to throw");
-                String k = sc.next();
-                k = k.toLowerCase();
+                sc.next();
                 currentPlayer.roll();
                 System.out.println(currentPlayer.getNavn() + " rolls: (" + currentPlayer.getFaceValue1() + "," + currentPlayer.getFaceValue2() + ") ->" + currentPlayer.getAccum());
                 currentPlayer.clearPointsIfOnes();
